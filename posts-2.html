@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글 목록 (2/2) · t3b04-gd-massage-evt</title>
+  <meta name="description" content="t3b04-gd-massage-evt에 올라온 글 목록입니다.">
+  <link rel="canonical" href="https://gongdeok-care-choice.link-hub.org/posts-2.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+        :root {
+            --bg-color: #0b0c10;
+            --main-gradient: linear-gradient(180deg, #0b0c10 0%, #1a1b22 100%);
+            --card-surface: rgba(255, 255, 255, 0.02);
+            --border-color: rgba(255, 255, 255, 0.04);
+            --text-high: #e4e6eb;
+            --text-low: #8f929b;
+            --warm-sand: #d1b894;
+            --glow: rgba(209, 184, 148, 0.12);
+            --font-serif: 'Gowun Batang', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--main-gradient);
+            color: var(--text-high);
+            font-family: var(--font-serif);
+            line-height: 1.85;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 660px;
+            margin: 0 auto;
+            padding: 90px 24px;
+            width: 100%;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .blog-header::after {
+            content: '';
+            display: block;
+            width: 35px;
+            height: 1px;
+            background: var(--warm-sand);
+            margin: 20px auto 0;
+            opacity: 0.4;
+            box-shadow: 0 0 6px var(--warm-sand);
+        }
+
+        .blog-sub {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--warm-sand);
+            font-family: var(--font-sans);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .blog-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.45;
+            letter-spacing: -0.01em;
+        }
+
+        .blog-date {
+            font-size: 0.85rem;
+            color: var(--text-low);
+            margin-top: 10px;
+            font-family: var(--font-sans);
+        }
+
+        .essay-content {
+            font-size: 1.08rem;
+            color: var(--text-high);
+            text-align: justify;
+        }
+
+        .essay-p {
+            margin-bottom: 28px;
+            text-indent: 10px;
+        }
+
+        .highlight-quote {
+            background: var(--card-surface);
+            border-left: 2px solid var(--warm-sand);
+            padding: 20px 24px;
+            margin: 36px 0;
+            border-radius: 0 8px 8px 0;
+            backdrop-filter: blur(8px);
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quote-inner {
+            font-style: italic;
+            color: #fcf8f2;
+            font-size: 1.02rem;
+        }
+
+        .comments {
+            margin-top: 75px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
+        }
+
+        .comments-label {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: var(--warm-sand);
+            letter-spacing: 0.12em;
+            margin-bottom: 22px;
+            text-transform: uppercase;
+        }
+
+        .comment-node {
+            background: var(--card-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .comment-node:hover {
+            border-color: rgba(209, 184, 148, 0.22);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .comment-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+        }
+
+        .author-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .post-time {
+            color: var(--text-low);
+        }
+
+        .stars {
+            color: var(--warm-sand);
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        .text-body {
+            font-size: 0.92rem;
+            color: var(--text-high);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 35px 24px;
+            border-top: 1px solid var(--border-color);
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            color: var(--text-low);
+            letter-spacing: 0.05em;
+        }
+
+        .sand-glow {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 16px;
+            }
+
+            .blog-title {
+                font-size: 1.55rem;
+            }
+
+            .essay-content {
+                font-size: 1.02rem;
+            }
+        }
+    </style>
+  <meta property="og:title" content="글 목록 (2/2) · t3b04-gd-massage-evt">
+  <meta property="og:description" content="t3b04-gd-massage-evt에 올라온 글 목록입니다.">
+  <meta property="og:url" content="https://gongdeok-care-choice.link-hub.org/posts-2.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+</head>
+<body>
+  <div class="container">
+    <header class="blog-header">
+            <div class="sand-glow"></div>
+            <div class="blog-sub">REST AND SILENCE</div>
+            <div class="blog-title">바쁜 도심의 호흡 뒤에 가려진 소박한 쉼표들의 기억</div>
+            <div class="blog-date">2026. 05. 27</div>
+        </header>
+    <main>
+      <h1>글 목록</h1>
+      <p>전체 40개 · 2/2 페이지</p>
+      <ul class="post-list">
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260721-0286.html">공덕 마사지 이벤트 비교 분석을 통한 합정 셔츠룸 단골들이 뽑은 핫플 매거진 확인</a>
+        <p class="post-item__summary">공덕 마사지 이벤트와 같은 지역 기반의 서비스와 마찬가지로 합정의 유흥 및 문화 공간 역시 소비자의 안목이 중요한 시점입니다. 최신 트렌드를 파악하기 위해 합정 셔츠룸 단골들이 뽑은 핫플 매거진 정</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0012.html">공덕 마사지 이벤트만큼 매력적인 망원 노래방 추천정보 비교</a>
+        <p class="post-item__summary">여러분은 유흥 장소를 고를 때 가장 중요하게 생각하는 포인트가 무엇인가요? 종종 진행되는 공덕 마사지 이벤트처럼 노래방 역시 업체별로 차별화된 혜택과 분위기를 제공합니다. 어떤 기준으로 업체를 선별</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0013.html">공덕 마사지 이벤트 활용 전 확인하는 홍대 노래방 추천정보</a>
+        <p class="post-item__summary">공덕 마사지 이벤트 정보를 찾는 이들이라면 휴식 이후의 즐거운 저녁 시간을 위해 홍대 주변의 놀 거리를 검색하게 됩니다. 단순히 위치가 가깝다는 이유만으로 선택하기보다는 방문 목적에 부합하는 환경인</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0014.html">공덕 마사지 이벤트와 비교하는 합리적 공덕 셔츠룸 추천정보</a>
+        <p class="post-item__summary">공덕 마사지 이벤트와 같이 휴식과 활력을 찾는 분들은 종종 퇴근 후 이어지는 유흥 문화에 대해서도 관심을 갖게 됩니다. 공덕 지역은 직장인 유동 인구가 많은 만큼 다양한 형태의 업소가 밀집해 있어 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0015.html">공덕 마사지 이벤트 예약만큼 중요한 연남 유흥 추천정보</a>
+        <p class="post-item__summary">공덕 마사지 이벤트와 같이 사전에 예약을 하고 방문하는 문화는 최근 유흥 분야에서도 정착되고 있습니다. 연남 지역은 젊은 층이 많이 모이는 곳인 만큼 유동성이 크고 업소의 교체도 잦은 편입니다. 많</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0016.html">공덕 마사지 이벤트만큼 필수적인 마곡 가라오케 추천정보</a>
+        <p class="post-item__summary">공덕 마사지 이벤트로 충분한 휴식을 취했다면, 마곡 지역에서의 마무리를 위해 가라오케를 찾는 분들이 많아지고 있습니다. 마곡은 신도시 특유의 정돈된 인프라를 갖추고 있어 대중교통 이용이 용이하고 주</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0017.html">공덕 마사지 이벤트 활용 전 확인해야 할 마곡 유흥 추천정보 가이드</a>
+        <p class="post-item__summary">오랜만에 도심을 벗어나 업무를 마친 뒤 동료들과 마곡 인근을 찾았다가 낯선 분위기에 당황했던 경험이 있습니다. 우연히 온라인에서 공덕 마사지 이벤트 관련 정보를 검색하며 시간을 보내다, 자연스럽게 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0018.html">공덕 마사지 이벤트처럼 체계적인 합정 노래방 추천정보와 시간 활용법</a>
+        <p class="post-item__summary">많은 이들이 유흥 시설을 방문할 때 무작정 저녁 시간대에 몰려야 즐겁다는 오해를 하곤 합니다. 공덕 마사지 이벤트 정보를 찾던 방문객들도 합정 지역의 노래방을 찾을 때 이와 비슷한 착각을 하곤 하는</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0019.html">공덕 마사지 이벤트 유저를 위한 연남 클럽 추천정보와 인원 구성 팁</a>
+        <p class="post-item__summary">성공적인 클럽 나들이를 위해서는 음악의 장르, 공간의 쾌적함, 그리고 함께하는 일행과의 합이 무엇보다 중요합니다. 평소 공덕 마사지 이벤트와 같은 여가 정보를 찾던 이들이 연남 지역의 새로운 유흥 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0020.html">공덕 마사지 이벤트와 비교하는 합정 셔츠룸 추천정보의 핵심 기준</a>
+        <p class="post-item__summary">과연 당신이 방문하려는 셔츠룸이 가격 대비 충분한 가치를 제공하고 있을까요? 공덕 마사지 이벤트 정보를 찾을 때처럼 꼼꼼하게 비교 분석을 수행하지 않는다면, 기대했던 서비스와는 동떨어진 결과를 마주</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0021.html">공덕 마사지 이벤트 활용 전 확인해야 할 공덕 가라오케 추천정보</a>
+        <p class="post-item__summary">일상의 피로를 풀기 위해 공덕 마사지 이벤트 정보를 찾다 보면 자연스럽게 저녁 시간의 여가를 고민하게 됩니다. 마포 일대에서 활기찬 밤을 보내기 위해 가라오케를 고려하는 분들이 많지만, 막상 선택지</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0022.html">공덕 마사지 이벤트만큼 중요한 합리적 상수 마사지 추천정보 판단</a>
+        <p class="post-item__summary">몸이 찌뿌드드할 때 공덕 마사지 이벤트 정보를 찾아보는 것처럼, 상수 지역에서도 자신에게 맞는 관리 샵을 찾기 위해 분주히 움직이는 이들이 많습니다. 하지만 무작정 저렴한 곳을 찾거나 무조건 비싼 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/juice-1.html">공덕 마사지 이벤트 정보</a>
+        <p class="post-item__summary">여러분은 휴식과 웰빙을 위한 다양한 방법을 찾고 계신가요? 공덕 지역에서는 여러 마사지 시설이 특별한 이벤트를 진행하며, 이용자에게 더 나은 휴식 경험을 제공하고 있습니다. 이런 소식들은 각기 다른</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/juice-2.html">공덕 마사지 이벤트 안내</a>
+        <p class="post-item__summary">공덕 일대에서 진행되는 마사지 관련 할인 및 프로모션 정보는 다양한 형태로 제공됩니다. 주로 특정 기간 동안 정상 가격 대비 혜택이 주어지거나, 예약 시 추가적인 안마 혜택을 받을 수 있는 경우가 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/normal-1.html">공덕 마사지 이벤트 안내</a>
+        <p class="post-item__summary">지역 내 마사지 서비스는 특별한 날이나 계절을 맞이하여 다양한 이벤트를 진행하는 경우가 많습니다. 공덕 역세권 일대는 많은 이용객이 방문하는 상권으로, 인근에 위치한 다양한 업소들이 고객들에게 더 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/normal-2.html">공덕 마사지 이벤트와 관련 이용 정보 안내</a>
+        <p class="post-item__summary">최근 공덕 일원에서 다양한 마사지 이벤트가 진행되고 있습니다. 이러한 이벤트는 보통 새로운 고객을 유치하거나 정기 고객을 위한 감사 혜택으로 마련되는 경우가 많습니다. 이를 이용하는 고객은 사전에 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/normal-3.html">공덕 마사지 이벤트 안내</a>
+        <p class="post-item__summary">공덕 일대에는 다양한 마사지 전문 시설들이 위치해 있으며, 특별한节气나 기간을 맞아 정기적인 이벤트를 진행하는 경우가 많습니다. 이러한 이벤트는 일반적으로 특정 날짜에限定된 할인 혜택이나 추가 서비</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/qa-001-xsoga5.html">공덕 마사지 이벤트</a>
+        <p class="post-item__summary">일상의 바쁜 업무와 학업으로 지친 몸을 이끌고 공덕 지역을 방문하는 분들이 많습니다. 공덕은 교통이 편리하고 직장인들이 많이 모이는 활기찬 곳이지만, 그만큼 피로가 쌓이기 쉬운 환경이기도 합니다. </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/review-001.html">형님 리뷰</a>
+        <p class="post-item__summary">형님들, 안녕하세요! 오늘은 제가 최근에 구매한 아식스 젤 카야노 14 OG 아이보리 컬러웨이에 대해 리뷰를 해보겠습니다. 이 신발은 2023년 리스탁 버전으로, 이전 버전과 달리 인솔 로고 프린트</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/review-002.html">공덕 마사지 방문 전 반드시 체크해야 할 시간대별 효율 분석</a>
+        <p class="post-item__summary">공덕 일대에서 마사지 숍을 선택할 때 가격표만 보는 것은 지극히 아마추어적인 접근이다. 자본주의 시장에서 서비스의 질은 결국 인적 자원의 컨디션과 직결된다. 관리사가 하루 중 소화하는 고객의 수가 </p>
+      </li>
+      </ul>
+    <nav class="pager">
+      <a class="pager__link" href="posts.html">1</a>
+      <span class="pager__current">2</span>
+    </nav>
+    </main>
+  </div>
+</body>
+</html>
